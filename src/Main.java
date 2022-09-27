@@ -7,13 +7,13 @@ public class Main {
         Manager manager = new Manager();
 
         Task taskFirst = new Task("Поесть","Принять пищу", "NEW");
-        Task taskSecond = new Task("Поспать","Хорошенько выспаться", "DONE");
+        Task taskSecond = new Task("Поспать","Хорошенько поспать", "DONE");
 
         ArrayList<EpicTask.SubTask> subTasksEpicTaskFirst = new ArrayList<>();
         EpicTask.SubTask subtaskFirstEpicTaskFirst = new EpicTask.SubTask("Закончить учебу",
-                "Сдать все спринты", "Вовремя выполнить ТЗ", "NEW");
+                "Сдать все спринты", "Выполнить ТЗ", "NEW");
         EpicTask.SubTask subtaskSecondEpicTaskFirst = new EpicTask.SubTask("Закончить учебу",
-                "Сдать дипломный проект", "Сделать дипломный проект", "DONE");
+                "Сделать дипломный проект", "Защитить дипломный проект", "DONE");
 
         subTasksEpicTaskFirst.add(subtaskFirstEpicTaskFirst);
         subTasksEpicTaskFirst.add(subtaskSecondEpicTaskFirst);
@@ -28,8 +28,8 @@ public class Main {
 
         subTasksEpicTaskSecond.add(subtaskFirstEpicTaskSecond);
 
-        EpicTask epicTaskSecond = new EpicTask("Сменить работу"
-                ,"Начать работать Java разработчиком", subTasksEpicTaskSecond);
+        EpicTask epicTaskSecond = new EpicTask("Найти работу"
+                ,"Устроиться на должности Junior-Java", subTasksEpicTaskSecond);
 
         manager.saveToStorage(taskFirst);
         manager.saveToStorage(taskSecond);
