@@ -39,8 +39,8 @@ public class Task {
     }
     @Override
     public String toString() {
-        return "ID задачи Task=\"" + id + "\", Название задачи=\"" + name + "\", Описание=\"" + description
-                + "\", Статус=\"" + status + "\"";
+        return "ID задачи Task= " + id + ", Название задачи= " + name + ", Описание= " + description
+                + ", Статус= " + status;
     }
 }
 
