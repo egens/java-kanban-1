@@ -1,15 +1,15 @@
 import java.util.ArrayList;
-import java.util.Arrays;
+
 public class EpicTask extends Task {
     private final ArrayList<SubTask> subTasks;
 
-    EpicTask(String nameEpicTask, String descriptionEpicTask, ArrayList<SubTask> subTasks) {
-        super(nameEpicTask, descriptionEpicTask);
+    EpicTask(String titleEpicTask, String descriptionEpicTask, ArrayList<SubTask> subTasks) {
+        super(titleEpicTask, descriptionEpicTask);
         this.setStatus(Manager.getEpicTaskStatus(subTasks));
         this.subTasks = subTasks;
     }
     EpicTask(EpicTask epicTask) {
-        this(epicTask.getName(), epicTask.getDescription(), epicTask.subTasks);
+        this(epicTask.getTitle(), epicTask.getDescription(), epicTask.subTasks);
     }
     ArrayList<SubTask> getSubTasks() {
         return subTasks;
@@ -17,23 +17,23 @@ public class EpicTask extends Task {
 
     @Override
     public String toString() {
-        return "ID задачи Epic= " + getId() + ", Название Epic задачи= " + getName() + ", Описание= " + getDescription()
-                + ", " + Arrays.toString(subTasks.toArray()) + ", Статус= " + getStatus();
+        return "ID задачи Epic= " + getId() + ", Название Epic задачи= " + getTitle() + ", Описание= " + getDescription()
+                + ", " + subTasks + ", Статус= " + getStatus();
     }
     static class SubTask extends Task {
-        private final String nameEpicTask;
-        SubTask(String nameEpicTask, String nameSubTask, String descriptionSubTask, String statusSubTask) {
+        private final String titleEpicTask;
+        SubTask(String titleEpicTask, String nameSubTask, String descriptionSubTask, String statusSubTask) {
             super(nameSubTask, descriptionSubTask, statusSubTask);
-            this.nameEpicTask = nameEpicTask;
+            this.titleEpicTask = titleEpicTask;
         }
         SubTask(SubTask subtask) {
-            this(subtask.nameEpicTask, subtask.getName(), subtask.getDescription(), subtask.getStatus());
+            this(subtask.titleEpicTask, subtask.getTitle(), subtask.getDescription(), subtask.getStatus());
         }
 
         @Override
         public String toString() {
-            return "ID подзадачи SubTask= " + getId() + ", Название Epic задачи= " + nameEpicTask
-                    + ", Название подзадачи= " + getName() + ", Описание= " + getDescription() + ", Статус= " + getStatus();
+            return "ID подзадачи SubTask= " + getId() + ", Название Epic задачи= " + titleEpicTask
+                    + ", Название подзадачи= " + getTitle() + ", Описание= " + getDescription() + ", Статус= " + getStatus();
         }
     }
 }

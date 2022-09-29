@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Manager {
-    private static int Id = 0;
+    private static int id = 0;
     private final HashMap<Integer, Task> taskStorage = new HashMap<>();
     private final HashMap<Integer, EpicTask> epicTaskStorage = new HashMap<>();
     private final HashMap<Integer, EpicTask.SubTask> subTaskStorage = new HashMap<>();
     static int getId() {
-        return Id;
+        return id;
     }
-    static void setId(int id) {
-        Id = id;
+    static void setId(int newId) {
+        id = newId;
     }
 
     HashMap<Integer, Task> getTaskStorage() {
@@ -22,56 +22,51 @@ public class Manager {
     HashMap<Integer, EpicTask.SubTask> getSubTaskStorage() {
         return subTaskStorage;
     }
+    static String getEpicTaskStatus(ArrayList<EpicTask.SubTask> subTasks) {
+        String saveStatusEpicTask;
+        int newCount = 0;
+        int doneCount = 0;
 
-    void saveToStorage(Object object) {
-        switch (object.getClass().toString()) {
-            case "class Task": {
-                taskStorage.put(((Task) object).getId(), (Task) object);
-                break;
+        for (EpicTask.SubTask subTask : subTasks) {
+            if (subTask.getStatus().equals("NEW")) {
+                newCount++;
             }
-            case "class EpicTask": {
-                epicTaskStorage.put(((EpicTask) object).getId(), (EpicTask) object);
-                break;
-            }
-            case "class EpicTask$SubTask": {
-                subTaskStorage.put(((EpicTask.SubTask) object).getId(), (EpicTask.SubTask) object);
-                break;
+            if (!subTask.getStatus().equals("DONE")) {
+                doneCount++;
             }
         }
-    }
 
-    ArrayList<Object> getCompleteListOfAnyTasks(HashMap<Integer, ? extends Task> treeMap) {
-        ArrayList<Object> completeListOfAnyTasks = new ArrayList<>();
-
-        for (Integer key : treeMap.keySet()) {
-            completeListOfAnyTasks.add(treeMap.get(key));
+        if ((subTasks.isEmpty()) || (newCount == subTasks.size())) {
+            saveStatusEpicTask = "NEW";
+        } else if (doneCount == subTasks.size()) {
+            saveStatusEpicTask = "DONE";
+        } else {
+            saveStatusEpicTask = "IN_PROGRESS";
         }
-        return completeListOfAnyTasks;
+        return saveStatusEpicTask;
     }
 
-    void deleteAllTasksOfAnyType(HashMap<Integer, ? extends Task> treeMap) {
-        treeMap.clear();
-    }
 
-    Object getTaskOfAnyTypeById(int id) {
-        Object taskOfAnyKind = null;
+    ArrayList<Object> getCompleteListOfTasks(HashMap<Integer, ? extends Task> hashMap) {
+        ArrayList<Object> completeListOfTasks = new ArrayList<>();
 
-        if (taskStorage.get(id) != null) {
-            taskOfAnyKind = taskStorage.get(id);
-        } else if (epicTaskStorage.get(id) != null) {
-            taskOfAnyKind = epicTaskStorage.get(id);
-        } else if (subTaskStorage.get(id) != null) {
-            taskOfAnyKind = subTaskStorage.get(id);
+        for (Integer key : hashMap.keySet()) {
+            completeListOfTasks.add(hashMap.get(key));
         }
-        return taskOfAnyKind;
+        return completeListOfTasks;
     }
+
+    void deleteAllTasks(HashMap<Integer, ? extends Task> hashMap) {
+        hashMap.clear();
+    }
+
 
     Object createCopyOfTaskOfAnyType(Object object) {
         switch (object.getClass().toString()) {
             case "class Task": {
                 return new Task((Task) object);
             }
-            case "class EpicTask$SubTask": {
+            case "class EpicTaskSubTask": {
                 return new EpicTask.SubTask((EpicTask.SubTask) object);
             }
             case "class EpicTask": {
@@ -92,29 +87,57 @@ public class Manager {
                 epicTaskStorage.put(id, (EpicTask) object);
                 break;
             }
-            case "class EpicTask$SubTask": {
+            case "class EpicTaskSubTask": {
                 subTaskStorage.put(id, (EpicTask.SubTask) object);
                 break;
             }
         }
     }
 
-    void removeTaskOfAnyTypeById(int id) {
+    void removeTaskById(int newId) {
         for (Integer task : taskStorage.keySet()) {
-            if (id == task) {
-                taskStorage.remove(id);
+            if (newId == task) {
+                taskStorage.remove(newId);
                 break;
             }
         }
         for (Integer epicTask : epicTaskStorage.keySet()) {
-            if (id == epicTask) {
-                epicTaskStorage.remove(id);
+            if (newId == epicTask) {
+                epicTaskStorage.remove(newId);
                 break;
             }
         }
         for (Integer subTask : subTaskStorage.keySet()) {
-            if (id == subTask) {
-                subTaskStorage.remove(id);
+            if (newId == subTask) {
+                subTaskStorage.remove(newId);
+                break;
+            }
+        }
+    }
+    Object getTaskOfTypeById(int newId) {
+        Object taskOfKinds = null;
+
+        if (taskStorage.get(newId) != null) {
+            taskOfKinds = taskStorage.get(newId);
+        } else if (epicTaskStorage.get(newId) != null) {
+            taskOfKinds = epicTaskStorage.get(newId);
+        } else if (subTaskStorage.get(newId) != null) {
+            taskOfKinds = subTaskStorage.get(newId);
+        }
+        return taskOfKinds;
+    }
+    void saveStorage(Object object) {
+        switch (object.getClass().toString()) {
+            case "class Task": {
+                taskStorage.put(((Task) object).getId(), (Task) object);
+                break;
+            }
+            case "class EpicTask": {
+                epicTaskStorage.put(((EpicTask) object).getId(), (EpicTask) object);
+                break;
+            }
+            case "class EpicTaskSubTask": {
+                subTaskStorage.put(((EpicTask.SubTask) object).getId(), (EpicTask.SubTask) object);
                 break;
             }
         }
@@ -122,29 +145,5 @@ public class Manager {
 
     ArrayList<EpicTask.SubTask> getCompleteListOfSubTaskByEpicTask(EpicTask epicTask) {
         return epicTask.getSubTasks();
-    }
-
-    static String getEpicTaskStatus(ArrayList<EpicTask.SubTask> subTasks) {
-        String statusEpicTask;
-        int newCount = 0;
-        int doneCount = 0;
-
-        for (EpicTask.SubTask subTask : subTasks) {
-            if (subTask.getStatus().equalsIgnoreCase("NEW")) {
-                newCount++;
-            }
-            if (!subTask.getStatus().equalsIgnoreCase("DONE")) {
-                doneCount++;
-            }
-        }
-
-        if ((subTasks.isEmpty()) || (newCount == subTasks.size())) {
-            statusEpicTask = "NEW";
-        } else if (doneCount == subTasks.size()) {
-            statusEpicTask = "DONE";
-        } else {
-            statusEpicTask = "IN_PROGRESS";
-        }
-        return statusEpicTask;
     }
 }

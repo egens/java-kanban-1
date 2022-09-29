@@ -1,32 +1,30 @@
-import java.io.BufferedReader;
-import java.io.File;
 public class Task {
     private final int id;
-    private final String name;
+    private final String title;
     private final String description;
     private String status;
 
-    Task(String nameTask, String descriptionTask, String statusTask) {
+    Task(String titleTask, String descriptionTask, String statusTask) {
         this.id = Manager.getId() + 1;
         Manager.setId(this.id);
-        this.name = nameTask;
+        this.title = titleTask;
         this.description = descriptionTask;
         this.status = statusTask;
     }
-    Task(String nameTask, String descriptionTask) {
+    Task(String titleTask, String descriptionTask) {
         this.id = Manager.getId() + 1;
         Manager.setId(this.id);
-        this.name = nameTask;
+        this.title = titleTask;
         this.description = descriptionTask;
     }
     Task(Task task) {
-        this(task.name, task.description, task.status);
+        this(task.title, task.description, task.status);
     }
     int getId() {
         return id;
     }
-    String getName() {
-        return name;
+    String getTitle() {
+        return title;
     }
     String getDescription() {
         return description;
@@ -39,7 +37,7 @@ public class Task {
     }
     @Override
     public String toString() {
-        return "ID задачи Task= " + id + ", Название задачи= " + name + ", Описание= " + description
+        return "ID задачи Task= " + id + ", Название задачи= " + title + ", Описание= " + description
                 + ", Статус= " + status;
     }
 }
