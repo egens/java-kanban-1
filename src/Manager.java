@@ -103,15 +103,15 @@ public class Manager {
     }
     void saveStorage(Object object) {
         switch (object.getClass().toString()) {
-            case "class Task": {
+            case "Task": {
                 taskStorage.put(((Task) object).getId(), (Task) object);
                 break;
             }
-            case "class EpicTask": {
+            case "EpicTask": {
                 epicTaskStorage.put(((EpicTask) object).getId(), (EpicTask) object);
                 break;
             }
-            case "class EpicTaskSubTask": {
+            case "SubTask": {
                 subTaskStorage.put(((SubTask) object).getId(), (SubTask) object);
                 break;
             }
