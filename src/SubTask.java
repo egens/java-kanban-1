@@ -1,18 +1,18 @@
 public class SubTask extends Task {
-    private final String titleEpicTask;
+    private final int id;
 
-    SubTask(String titleEpicTask, String nameSubTask, String descriptionSubTask, String statusSubTask) {
+    SubTask(int id, String nameSubTask, String descriptionSubTask, String statusSubTask) {
         super(nameSubTask, descriptionSubTask, statusSubTask);
-        this.titleEpicTask = titleEpicTask;
+        this.id = id;
     }
 
     SubTask(SubTask subtask) {
-        this(subtask.titleEpicTask, subtask.getTitle(), subtask.getDescription(), subtask.getStatus());
+        this(subtask.id, subtask.getTitle(), subtask.getDescription(), subtask.getStatus());
     }
 
     @Override
     public String toString() {
-        return "ID подзадачи SubTask = " + getId() + "," + "\nНазвание Epic задачи = " + titleEpicTask
+        return "ID подзадачи SubTask = " + id + "," + "\nID Epic задачи = " + getId()
                 + ", " + "\nНазвание подзадачи = " + getTitle() + ", " + "\nОписание = " + getDescription() + ", "
                 +  "\nСтатус = " + getStatus() + "\n";
     }

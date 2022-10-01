@@ -1,28 +1,33 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Manager {
-    private static int id = 0;
-    private final HashMap<Integer, Task> taskStorage = new HashMap<>();
-    private final HashMap<Integer, EpicTask> epicTaskStorage = new HashMap<>();
-    private final HashMap<Integer, SubTask> subTaskStorage = new HashMap<>();
-    static int getId() {
+
+
+    private int id = 0;
+    private final Map<Integer, Task> taskStorage = new HashMap<>();
+    private final Map<Integer, EpicTask> epicTaskStorage = new HashMap<>();
+    private final Map<Integer, SubTask> subTaskStorage = new HashMap<>();
+    void setId(int id) {
+        this.id = id;
+    }
+    int getId() {
         return id;
     }
-    static void setId(int newId) {
-        id = newId;
-    }
 
-    HashMap<Integer, Task> getTaskStorage() {
+    Map<Integer, Task> getTaskStorage() {
         return taskStorage;
     }
-    HashMap<Integer, EpicTask> getEpicTaskStorage() {
+    Map<Integer, EpicTask> getEpicTaskStorage() {
         return epicTaskStorage;
     }
-    HashMap<Integer, SubTask> getSubTaskStorage() {
+    Map<Integer, SubTask> getSubTaskStorage() {
         return subTaskStorage;
     }
-    static String getEpicTaskStatus(ArrayList<SubTask> subTasks) {
+
+    String getEpicTaskStatus(List<SubTask> subTasks) {
         String saveEpicTaskStatus;
         int newCount = 0;
         int doneCount = 0;
@@ -47,11 +52,11 @@ public class Manager {
     }
 
 
-    ArrayList<Object> getReadyListOfTasks(HashMap<Integer, ? extends Task> hashMap) {
-        ArrayList<Object> completeListOfTasks = new ArrayList<>();
+    List<Object> getReadyListOfTasks(Map<Integer, ? extends Task> map) {
+        List<Object> completeListOfTasks = new ArrayList<>();
 
-        for (Integer key : hashMap.keySet()) {
-            completeListOfTasks.add(hashMap.get(key));
+        for (Integer key : map.keySet()) {
+            completeListOfTasks.add(map.get(key));
         }
         return completeListOfTasks;
     }
@@ -72,10 +77,22 @@ public class Manager {
         }
     }
 
+    void saveTaskStorage(Object object){
+        taskStorage.put(((Task) object).getId(), (Task) object);
+    }
+
+    void saveEpicTaskStorage(Object object){
+        epicTaskStorage.put(((EpicTask) object).getId(), (EpicTask) object);
+    }
+
+    void saveSubTaskStorage(Object object){
+        subTaskStorage.put(((SubTask) object).getId(), (SubTask) object);
+    }
+
     void updateTaskOfType(int id, Object object) {
         switch (object.getClass().toString()) {
             case "Task": {
-                taskStorage.put(id, (EpicTask) object);
+                taskStorage.put(id, (Task) object);
                 break;
             }
             case "EpicTask": {
@@ -101,25 +118,11 @@ public class Manager {
         }
         return kindTask;
     }
-    void saveStorage(Object object) {
-        switch (object.getClass().toString()) {
-            case "Task": {
-                taskStorage.put(((Task) object).getId(), (Task) object);
-                break;
-            }
-            case "EpicTask": {
-                epicTaskStorage.put(((EpicTask) object).getId(), (EpicTask) object);
-                break;
-            }
-            case "SubTask": {
-                subTaskStorage.put(((SubTask) object).getId(), (SubTask) object);
-                break;
-            }
-        }
-    }
+
+
 
     ArrayList<SubTask> getCompleteListOfSubTaskByEpicTask(EpicTask epicTask) {
-        return epicTask.getSubTasks();
+        return (ArrayList<SubTask>) epicTask.getSubTasks();
     }
     void removeTaskById(int newId) {
         for (Integer tasks : taskStorage.keySet()) {
@@ -141,7 +144,7 @@ public class Manager {
             }
         }
     }
-    void deleteAllTasks(HashMap<Integer, ? extends Task> hashMap) {
-        hashMap.clear();
+    void deleteAllTasks(Map<Integer, ? extends Task> map) {
+        map.clear();
     }
 }

@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class EpicTask extends Task {
-    private final ArrayList<SubTask> subTasks;
-
-    EpicTask(String titleEpicTask, String descriptionEpicTask, ArrayList<SubTask> subTasks) {
+    private final List<SubTask> subTasks;
+    Manager manager = new Manager();
+    EpicTask(String titleEpicTask, String descriptionEpicTask, List<SubTask> subTasks) {
         super(titleEpicTask, descriptionEpicTask);
-        this.setStatus(Manager.getEpicTaskStatus(subTasks));
+        this.setStatus(manager.getEpicTaskStatus(subTasks));
         this.subTasks = subTasks;
     }
 
@@ -13,7 +13,7 @@ public class EpicTask extends Task {
         this(epicTask.getTitle(), epicTask.getDescription(), epicTask.subTasks);
     }
 
-    ArrayList<SubTask> getSubTasks() {
+    List<SubTask> getSubTasks() {
         return subTasks;
     }
 

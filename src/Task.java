@@ -1,20 +1,20 @@
 public class Task {
     private final int id;
-    private final String title;
-    private final String description;
+    private String title;
+    private String description;
     private String status;
-
+    Manager manager = new Manager();
     Task(String titleTask, String descriptionTask, String statusTask) {
-        this.id = Manager.getId() + 1;
-        Manager.setId(this.id);
+        this.id = manager.getId() + 1;
+        manager.setId(this.id);
         this.title = titleTask;
         this.description = descriptionTask;
         this.status = statusTask;
     }
 
     Task(String titleTask, String descriptionTask) {
-        this.id = Manager.getId() + 1;
-        Manager.setId(this.id);
+        this.id = manager.getId() + 1;
+        manager.setId(this.id);
         this.title = titleTask;
         this.description = descriptionTask;
     }
@@ -27,12 +27,20 @@ public class Task {
         return id;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     String getStatus() {
