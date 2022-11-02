@@ -4,6 +4,7 @@ public class Task {
     private String description;
     private String status;
     Manager manager = new Manager();
+
     Task(String titleTask, String descriptionTask, String statusTask) {
         this.id = manager.getId() + 1;
         manager.setId(this.id);
@@ -23,7 +24,7 @@ public class Task {
         this(task.title, task.description, task.status);
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
@@ -35,7 +36,7 @@ public class Task {
         this.title = title;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -43,7 +44,7 @@ public class Task {
         this.description = description;
     }
 
-    String getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -52,6 +53,7 @@ public class Task {
     }
 
 
+    @Override
     public String toString() {
         return "ID задачи Task = " + id + ", " + "\nНазвание задачи = " + title + ",\nОписание = " + description
                 + ", " + "\nСтатус = " + status + "\n";
